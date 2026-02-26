@@ -271,9 +271,10 @@
                 <div class="card">
                     <img src="Solastia.jpeg" class="card-img" alt="Tech">
                     <div class="card-content">
-                        <h3>SOLASTIA 2026</h3>
+                        <h3>SOLASTA 26</h3>
                         <p><strong>Date:</strong> March 15</p>
-                        <p>A celebration of innovation and future tech - By DEPT. OF COMPUTER SCIENCE AND ENGINEERING.</p>
+                        <p>A celebration of innovation and future tech <br>
+                            - By DEPT. OF COMPUTER SCIENCE AND ENGINEERING.</p>
                         <button class="btn" onclick="openModal('Tech Fest', 'Annual tech symposium featuring coding challenges and robotics.', 'Main Auditorium')">View Details</button>
                     </div>
                 </div>
@@ -282,7 +283,7 @@
                     <div class="card-content">
                         <h3>Arts Fest</h3>
                         <p><strong>Date:</strong> April 02</p>
-                        <p>Showcasing the finest creative talents on campus.</p>
+                        <p>Proudly Presented by the Students – <br>A Celebration of Creativity, Culture, and Talent.</p>
                         <button class="btn" onclick="openModal('Arts Fest', 'Gallery exhibition and live painting competitions.', 'Open Air Theater')">View Details</button>
                     </div>
                 </div>
@@ -291,7 +292,8 @@
                     <div class="card-content">
                         <h3>Sports Meet</h3>
                         <p><strong>Date:</strong> April 10</p>
-                        <p>Annual inter-college athletic championship.</p>
+                        <p>The Annual Athletic Meet, proudly presented by our college community.
+                            – Celebrating True Sportsmanship..</p>
                         <button class="btn" onclick="openModal('Sports Meet', 'Track and field events followed by football finals.', 'College Ground')">View Details</button>
                     </div>
                 </div>
@@ -300,7 +302,8 @@
                     <div class="card-content">
                         <h3>Cupid Tales</h3>
                         <p><strong>Date:</strong> Feb 28</p>
-                        <p>An evening of music, dance, and magic come together-presented by REELS CLUB NSSCE</p>
+                        <p>An evening of music, dance, and magic come together<br>
+                            -presented by REELS CLUB NSSCE</p>
                         <button class="btn" onclick="openModal('Cultural Night', 'A grand finale featuring professional music acts.', 'Indoor Stadium')">View Details</button>
                     </div>
                 </div>
@@ -314,32 +317,48 @@
                 <button class="filter-btn" onclick="filterClub('MEDIA')">MEDIA</button>
                 <button class="filter-btn" onclick="filterClub('MULEARN')">MULEARN</button>
                 <button class="filter-btn" onclick="filterClub('TINKER HUB')">TINKER HUB</button>
-                <button class="filter-btn" onclick="filterClub('MUSIC AND DANCE')">MUSIC AND DANCE</button>
+                <button class="filter-btn" onclick="filterClub('RUDRA')">RUDRA</button>
             </div>
 
             <div class="grid" id="club-container">
-                <div class="card club-item" data-type="MEDIA">
-                    <div class="card-content">
-                        <h3>MEDIA</h3>
-                        <p>Capturing moments through the lens.</p>
+                <div class="card club-item" data-type="MEDIA" style="display: flex; flex-direction: column; width: 400px; height: 400px; overflow: hidden; border: 1px solid #003366; background-color: #001a33; border-radius: 12px; padding: 0;">
+    
+                 <img src="Media.jpeg" alt="Media" style="width: 100%; height: 220px; object-fit: cover; display: block;">
+
+                 <div class="card-content" style="padding: 15px; text-align: center; color: white;">
+                 <h3 style="margin: 10px 0; font-family: sans-serif;">MEDIA</h3>
+                 <p style="font-size: 14px; opacity: 0.8;">Capturing moments through the lens.</p>
+                </div>
+    
+            </div>
+                
+                
+                <div class="card club-item" data-type="MULEARN" style="display: flex; flex-direction: column; width: 400px; height: 400px; overflow: hidden; border: 1px solid #003366; background-color: #001a33; border-radius: 12px; padding: 0;">
+    
+                 <img src="Mulearn.jpeg" alt="Media" style="width: 100%; height: 220px; object-fit: cover; display: block;">
+
+                 <div class="card-content" style="padding: 15px; text-align: center; color: white;">
+                       
+                        <h3 style="margin: 10px 0; font-family: sans-serif;">MULEARN</h3>
+                        <p style="font-size: 14px; opacity: 0.8;">Empowering future Innovators.</p>
                     </div>
                 </div>
-                <div class="card club-item" data-type="MULEARN">
-                    <div class="card-content">
-                        <h3>MULEARN</h3>
-                        <p>Empowering future Innovators.</p>
+                <div class="card club-item" data-type="TINKER HUB" style="display: flex; flex-direction: column; width: 400px; height: 400px; overflow: hidden; border: 1px solid #003366; background-color: #001a33; border-radius: 12px; padding: 0;">
+    
+                 <img src="Tinker hub.jpeg" alt="Media" style="width: 100%; height: 220px; object-fit: cover; display: block;">
+
+                 <div class="card-content" style="padding: 15px; text-align: center; color: white;">
+                        <h3 style="margin: 10px 0; font-family: sans-serif;">TINKER HUB</h3>
+                        <p style="font-size: 14px; opacity: 0.8;">Learn.Build.Lead.</p>
                     </div>
                 </div>
-                <div class="card club-item" data-type="TINKER HUB">
-                    <div class="card-content">
-                        <h3>TINKER HUB</h3>
-                        <p>Learn.Build.Lead.</p>
-                    </div>
-                </div>
-                <div class="card club-item" data-type="MUSIC AND DANCE">
-                    <div class="card-content">
-                        <h3>MUSIC AND DANCE</h3>
-                        <p>Feel the Beat.Live the Music.</p>
+                 <div class="card club-item" data-type="RUDRA" style="display: flex; flex-direction: column; width: 400px; height: 400px; overflow: hidden; border: 1px solid #003366; background-color: #001a33; border-radius: 12px; padding: 0;">
+    
+                 <img src="Music.jpeg" alt="Media" style="width: 100%; height: 220px; object-fit: cover; display: block;">
+
+                 <div class="card-content" style="padding: 15px; text-align: center; color: white;">
+                        <h3 style="margin: 10px 0; font-family: sans-serif;">RUDRA</h3>
+                        <p style="font-size: 14px; opacity: 0.8;">Feel the Beat.Live the Music.</p>
                     </div>
                 </div>
             </div>
@@ -432,6 +451,13 @@
                 }
             });
         }
+        
+
+    
+ 
+    
+
+
     </script>
 </body>
 </html>
