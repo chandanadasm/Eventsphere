@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventSphere | NSS Eng. College Event Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-grad: linear-gradient(135deg, #d0d7ed, #370757);
+            --dark: #2d3436;
+            --light: #f9f9f9;
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --radius: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* --- LOGIN SCREEN --- */
+        #login-screen {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url("eventcover.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: fixed;
+            z-index: 1000;
+            transition: 0.5s;
+        }
+
+        .login-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .login-card h1 { margin-bottom: 5px; color: #6e8efb; }
+        .login-card p { margin-bottom: 25px; color: #666; font-size: 0.9rem; }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .btn {
+            background: var(--primary-grad);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .error-msg { color: #ff7675; font-size: 0.8rem; display: none; margin-top: 10px; }
+
+        /* --- MAIN PORTAL (Hidden by default) --- */
+        #main-portal { display: none; }
+
+        /* --- NAVBAR --- */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 999;
+            transition: 0.4s;
+            background: transparent;
+        }
+
+        nav.scrolled {
+            background: var(--white);
+            padding: 15px 50px;
+            box-shadow: var(--shadow);
+        }
+
+        .logo { font-weight: 700; font-size: 1.5rem; color: var(--white); transition: 0.3s; }
+        nav.scrolled .logo { color: #6e8efb; }
+
+        .nav-links { display: flex; list-style: none; }
+        .nav-links li { margin-left: 30px; }
+        .nav-links a { 
+            text-decoration: none; 
+            color: var(--white); 
+            font-weight: 400; 
+            transition: 0.3s;
+        }
+        nav.scrolled .nav-links a { color: var(--dark); }
+        .nav-links a:hover { color: #fffa65 !important; }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 80vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('coverimg.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            animation: fadeIn 1.5s ease;
+        }
+
+        @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+
+        /* --- SECTION GENERIC --- */
+        section { padding: 80px 10%; }
+        .section-title { text-align: center; margin-bottom: 40px; font-size: 2rem; }
+
+        /* --- CARDS GRID --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: 0.3s;
+        }
+
+        .card:hover { transform: translateY(-10px); }
+        .card-img { height: 180px; background: #ddd; width: 100%; object-fit: cover; }
+        .card-content { padding: 20px; }
+        .card-content h3 { margin-bottom: 10px; }
+        .card-content p { font-size: 0.9rem; color: #666; margin-bottom: 15px; }
+
+        /* --- CLUBS SECTION --- */
+        .club-filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        .filter-btn {
+            padding: 8px 20px;
+            border: 2px solid #6e8efb;
+            background: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .filter-btn.active, .filter-btn:hover {
+            background: #6e8efb;
+            color: white;
+        }
+
+        /* --- MODAL --- */
+        .modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: var(--radius);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+        .close-modal {
+            position: absolute;
+            top: 15px; right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 10%;
+            text-align: center;
+        }
+        .social-icons { margin-top: 15px; }
+        .social-icons span {
+            margin: 0 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-block;
+        }
+        .social-icons span:hover { transform: scale(1.3); color: #6e8efb; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            nav { padding: 15px 20px; }
+            .nav-links { display: none; } /* Simplified for this version */
+            section { padding: 60px 5%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="login-screen">
+        <div class="login-card">
+            <h1>EventSphere</h1>
+            <p>College Events Portal</p>
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+            <button class="btn" onclick="handleLogin()">Login</button>
+            <p id="login-error" class="error-msg">Please fill in all fields!</p>
+        </div>
+    </div>
+
+    <div id="main-portal">
+        <nav id="navbar">
+            <div class="logo">EventSphere</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#clubs">Clubs</a></li>
+                <li><a href="#" onclick="handleLogout()">Logout</a></li>
+            </ul>
+        </nav>
+
+        <section id="home" class="hero">
+            <h1>Welcome to EventSphere</h1>
+            <p>Your ultimate destination for campus happenings.</p>
+            <p>
+                @ NSS Engineering college,Palakkad
+            </p>
+            <br>
+            <a href="#events" class="btn" style="width: auto;">Explore Events</a>
+        </section>
+
+        <section id="events">
+            <h2 class="section-title">Upcoming Events</h2>
+            <div class="grid">
+                <div class="card">
+                    <img src="Solastia.jpeg" class="card-img" alt="Tech">
+                    <div class="card-content">
+                        <h3>SOLASTIA 2026</h3>
+                        <p><strong>Date:</strong> March 15</p>
+                        <p>A celebration of innovation and future tech - By DEPT. OF COMPUTER SCIENCE AND ENGINEERING.</p>
+                        <button class="btn" onclick="openModal('Tech Fest', 'Annual tech symposium featuring coding challenges and robotics.', 'Main Auditorium')">View Details</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=500&q=60" class="card-img" alt="Arts">
+                    <div class="card-content">
+                        <h3>Arts Fest</h3>
+                        <p><strong>Date:</strong> April 02</p>
+                        <p>Showcasing the finest creative talents on campus.</p>
+                        <button class="btn" onclick="openModal('Arts Fest', 'Gallery exhibition and live painting competitions.', 'Open Air Theater')">View Details</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="sports nss.jpg" class="card-img" alt="Sports">
+                    <div class="card-content">
+                        <h3>Sports Meet</h3>
+                        <p><strong>Date:</strong> April 10</p>
+                        <p>Annual inter-college athletic championship.</p>
+                        <button class="btn" onclick="openModal('Sports Meet', 'Track and field events followed by football finals.', 'College Ground')">View Details</button>
+                    </div>
+                </div>
+                <div class="card">event
+                    <img src="concert.jpeg" class="card-img" alt="Cultural">
+                    <div class="card-content">
+                        <h3>Cupid Tales</h3>
+                        <p><strong>Date:</strong> Feb 28</p>
+                        <p>An evening of music, dance, and magic come together-presented by REELS CLUB NSSCE</p>
+                        <button class="btn" onclick="openModal('Cultural Night', 'A grand finale featuring professional music acts.', 'Indoor Stadium')">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="clubs" style="background: #f0f2f5;">
+            <h2 class="section-title">Our Clubs</h2>
+            <div class="club-filters">
+                <button class="filter-btn active" onclick="filterClub('All')">All</button>
+                <button class="filter-btn" onclick="filterClub('MEDIA')">MEDIA</button>
+                <button class="filter-btn" onclick="filterClub('MULEARN')">MULEARN</button>
+                <button class="filter-btn" onclick="filterClub('TINKER HUB')">TINKER HUB</button>
+                <button class="filter-btn" onclick="filterClub('MUSIC AND DANCE')">MUSIC AND DANCE</button>
+            </div>
+
+            <div class="grid" id="club-container">
+                <div class="card club-item" data-type="MEDIA">
+                    <div class="card-content">
+                        <h3>MEDIA</h3>
+                        <p>Capturing moments through the lens.</p>
+                    </div>
+                </div>
+                <div class="card club-item" data-type="MULEARN">
+                    <div class="card-content">
+                        <h3>MULEARN</h3>
+                        <p>Empowering future Innovators.</p>
+                    </div>
+                </div>
+                <div class="card club-item" data-type="TINKER HUB">
+                    <div class="card-content">
+                        <h3>TINKER HUB</h3>
+                        <p>Learn.Build.Lead.</p>
+                    </div>
+                </div>
+                <div class="card club-item" data-type="MUSIC AND DANCE">
+                    <div class="card-content">
+                        <h3>MUSIC AND DANCE</h3>
+                        <p>Feel the Beat.Live the Music.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2026 EventSphere – All Rights Reserved</p>
+            <div class="social-icons">
+                <span>Facebook</span> | <span>Instagram</span> | <span>Twitter</span>
+            </div>
+        </footer>
+    </div>
+
+    <div id="eventModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Event Title</h2>
+            <hr style="margin: 15px 0;">
+            <p id="modalDesc">Description goes here...</p>
+            <br>
+            <p><strong>Venue:</strong> <span id="modalVenue">Location</span></p>
+            <p><strong>Coordinator:</strong> Prof. John Doe</p>
+            <br>
+            <button class="btn" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // --- LOGIN LOGIC ---
+        function handleLogin() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const error = document.getElementById('login-error');
+
+            if (user === "" || pass === "") {
+                error.style.display = "block";
+            } else {
+                document.getElementById('login-screen').style.transform = "translateY(-100%)";
+                setTimeout(() => {
+                    document.getElementById('login-screen').style.display = "none";
+                    document.getElementById('main-portal').style.display = "block";
+                    document.body.style.overflow = "auto";
+                }, 500);
+            }
+        }
+
+        function handleLogout() {
+            location.reload(); // Simplest way to return to login and reset state
+        }
+
+        // --- NAVBAR SCROLL EFFECT ---
+        window.onscroll = function() {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        };
+
+        // --- MODAL LOGIC ---
+        function openModal(title, desc, venue) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalDesc').innerText = desc;
+            document.getElementById('modalVenue').innerText = venue;
+            document.getElementById('eventModal').style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById('eventModal').style.display = "none";
+        }
+
+        // --- CLUB FILTER LOGIC ---
+        function filterClub(category) {
+            const items = document.querySelectorAll('.club-item');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            // Update button styles
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.innerText === category) btn.classList.add('active');
+            });
+
+            // Filter items
+            items.forEach(item => {
+                if (category === 'All' || item.getAttribute('data-type') === category) {
+                    item.style.display = "block";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+        }
+    </script>
+</body>
+</html>
